@@ -1,0 +1,28 @@
+{
+    "questions": [
+        {
+            "q":"Are you alive?",
+            "a":[
+                {"option":"Yee","correct":"true"},
+                {"option":"Eh, Technically, uh, Nah","correct":"false"},
+                {"option":"Woooooaooaooaoao","correct":"false"}
+            ]
+        },
+        {
+            "q":"Aeeees?",
+            "a":[
+                {"option":"Bob was here","correct":"true"},
+                {"option":"Uno","correct":"false"},
+                {"option":"ayyy-lmao","correct":"false"}
+            ]
+        },
+        {
+            "q":"Foo",
+            "a":[
+                {"option":"Bar","correct":"false"},
+                {"option":"Egg","correct":"true"},
+                {"option":"George","correct":"false"}
+            ]
+        }
+    ]
+}

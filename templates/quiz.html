@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Quiz</title>
+        <!-- script type="text/javascript" src="static/jquery.js"></script> -->
+        <!--script src={{url_for('static',filename='js/lib/jsquery-3.2.1.slim.min.js')}}></script> -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link type="text/text/css" href="{{url_for('static',filename='css/quiz.css')}}">
+    </head>
+    <body>
+        <form method="POST" action="{{url_for('quiz')}}">
+            <div id='Container'></div>
+            <input type="hidden" name="quiz0">
+            <input type='submit' id='submit' value='submit'></input>
+            <input type='button' id='next' value='next'></input>
+        </form>
+    </body>
+
+    <script> //On ready
+        let questions;
+        let number_of_questions;
+        $(document).ready(function() {
+            $('#next').hide()
+            $.get("{{url_for('static',filename='ajax/quiz0.json')}}", function(data) {
+                questions = data.questions
+                number_of_questions = data.questions.length
+                //console.log("Received "+number_of_questions+" questions.")
+                //alert('loaded quiz data')
+            }).done(function() {
+                show_quiz(questions)
+            })
+
+        })
+
+        function show_quiz(data) {
+            let ctn = $('#Container')
+            for(i=0;i<data.length;i++) {
+                let dta = ""
+                dta += ("<div id='question"+i+"' class='question'>")
+                dta += ("<h2>"+data[i].q+"</h2>")
+                for (a=0;a<data[i].a.length;a++) {
+                    dta += (
+                        "<p>"+data[i].a[a].option
+                        +"<input type='radio' name='"+i+"' value='"+a+"'>Select</input>"
+                        +"</p>"
+                    )
+                }
+                dta += "</div>"
+                //console.log(data[i])
+                ctn.append(dta)
+            }
+        }
+
+        //On submit
+        let answers;
+        function get_selected_answers() {
+            for (i=0;i<number_of_questions;i++) {
+                for (e=0;e<questions[i].a.length;e++) {
+                    //console.log(questions[i].a[e]);
+
+                }
+                /*for (a=0;a<questions[i].a.len;a++) {
+                    console.log(questions[i].a[a]);
+                    //answers[i]=questions[i].a[a];
+                }*/
+                console.log(questions[i].a[0])
+            }
+        }
+
+        $('#submit').on('click', function() {
+            let returnData;
+            get_selected_answers();
+            //console.log(answers);
+            $.post("{{url_for('quiz')}}", function(data) {
+                //returnData = data
+                //console.log(returnData)
+            }).done(function() {
+                $('#submit').hide()
+                $('#next').show()
+            })
+        })
+    </script>
+
+</html>
